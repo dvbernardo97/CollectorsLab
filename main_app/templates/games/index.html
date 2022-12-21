@@ -1,22 +1,24 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
-<h1>Cat List</h1>
+<h1>Game List</h1>
 
-{% for Game in games %}
+{% for game in object_list %}
   <div class="card">
-    {% comment %} <a href="/games/{{ game.id }}"> {% endcomment %}
+    <a href="/games/{{game.id}}">
     <div class="card-content">
-      <span class="card-title">{{ Game.name }}</span>
-      <p>Genre: {{ Game.genre }}</p>
-      <p>Description: {{ Game.description }}</p>
-      {% if Game.year > 2000 %}
-        <p>Year: {{ Game.year }}</p>
+      <span class="card-title">{{ game.name }}</span>
+      <p>Genre: {{ game.genre }}</p>
+      <p>Description: {{ game.description }}</p>
+      {% if game.year > 2000 %}
+        <p>Year: {{ game.year }}</p>
       {% else %}
         <p>Year: Old</p>
       {% endif %}
     </div>
+    </a>
   </div>
+
 {% endfor %}
 
 {% endblock %}
