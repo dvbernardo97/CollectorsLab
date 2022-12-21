@@ -14,9 +14,6 @@ def about(request):
     return render(request, "about.html")
 
 
-# def games_index(request):
-#     games = Game.objects.all()
-#     return render(request, "games/index.html", {"games": games})
 class GameList(ListView):
     model = Game
     template_name = "games/index.html"
@@ -24,7 +21,7 @@ class GameList(ListView):
 
 class GameCreate(CreateView):
     model = Game
-    fields = "__all__"
+    fields = ["name", "genre", "description", "year"]
     success_url = "/games/"
 
 
@@ -40,16 +37,20 @@ class GameDelete(DeleteView):
 
 def games_detail(request, game_id):
     game = Game.objects.get(id=game_id)
+    id_list = game.contents.all().values_list("id")
+    content_not_included = Content.objects.exclude(id__in=id_list)
     time_form = TimeForm()
-    return render(request, "games/detail.html", {"game": game, "time_form": time_form})
+    return render(
+        request,
+        "games/detail.html",
+        {"game": game, "time_form": time_form, "contents": content_not_included},
+    )
 
 
 def add_time(request, game_id):
     form = TimeForm(request.POST)
     # validate the form
     if form.is_valid():
-        # don't save the form to the db until it
-        # has the cat_id assigned
         new_time = form.save(commit=False)
         new_time.game_id = game_id
         new_time.save()
@@ -77,3 +78,8 @@ class ContentUpdate(UpdateView):
 class ContentDelete(DeleteView):
     model = Content
     success_url = "/contents/"
+
+
+def ext_contents(request, game_id, contents_id):
+    Game.objects.get(id=game_id).contents.add(contents_id)
+    return redirect("detail", game_id=game_id)
