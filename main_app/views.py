@@ -1,6 +1,6 @@
-from django.shortcuts import render,redirect
-from .models import Game
-from django.views.generic import ListView
+from django.shortcuts import render, redirect
+from .models import Game, Content
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import TimeForm
 
@@ -54,3 +54,26 @@ def add_time(request, game_id):
         new_time.game_id = game_id
         new_time.save()
     return redirect("detail", game_id=game_id)
+
+
+class ContentList(ListView):
+    model = Content
+
+
+class ContentDetail(DetailView):
+    model = Content
+
+
+class ContentCreate(CreateView):
+    model = Content
+    fields = "__all__"
+
+
+class ContentUpdate(UpdateView):
+    model = Content
+    fields = ["name", "color"]
+
+
+class ContentDelete(DeleteView):
+    model = Content
+    success_url = "/contents/"

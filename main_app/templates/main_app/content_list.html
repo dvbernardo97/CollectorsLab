@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+  {% block content %}
+
+<h1>Content List</h1>
+
+{% for content in content_list %}
+  <a href="{% url 'contents_detail' content.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ content.name }}</span>
+            <p>download: {{ content.download }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+{% endblock %}

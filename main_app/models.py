@@ -3,12 +3,25 @@ from django.urls import reverse
 
 VIDEOS = (("M", "Morning"), ("A", "Afternoon"), ("E", "Evening"))
 
+
+class Content(models.Model):
+    name = models.CharField(max_length=50)
+    download = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("contents_detail", kwargs={"pk": self.id})
+
+
 # Create your models here.
 class Game(models.Model):
     name = models.CharField(max_length=100)
     genre = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     year = models.IntegerField()
+    contents = models.ManyToManyField(Content)
 
     def __str__(self):
         return self.name
