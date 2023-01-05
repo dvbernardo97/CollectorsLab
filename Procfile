@@ -1,1 +1,1 @@
-web: gamescollector.wsgi
+web: gunicorn gamescollector.wsgi

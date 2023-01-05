@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = gamescollector.wsgi.application'
+WSGI_APPLICATION = gamescollector.wsgi.application
 
 
 # Database
