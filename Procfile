@@ -1,0 +1,1 @@
+web: gamescollector.wsgi
